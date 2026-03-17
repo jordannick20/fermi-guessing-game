@@ -12,7 +12,10 @@ public class Window extends JFrame {
     private JTextField txtCount;
     private JTextField txtPrice;
 
+    private JTextArea txtOutput;
+
     private JButton OKButton;
+    private JButton ResetButton;
     
 
     public Window() {
@@ -21,7 +24,7 @@ public class Window extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        JPanel panelInput = new JPanel(new MigLayout());
+        JPanel panelInput = new JPanel(new MigLayout("", "", "[]10[]10[]10[]10[]10[]20"));
         setContentPane(panelInput);
         
         
@@ -38,18 +41,17 @@ public class Window extends JFrame {
         txtCount.setPreferredSize(new Dimension(80, 20));
         txtPrice.setPreferredSize(new Dimension(80, 20));
         
-        OKButton = new JButton("Ok");
-        panelInput.add(OKButton);
+        OKButton = new JButton("     Ok    ");
+        panelInput.add(OKButton,"wrap");
 
+        txtOutput = new JTextArea();
+        txtOutput.setEditable(false);
+        txtOutput.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
+        txtOutput.setPreferredSize(new Dimension(400, 200));
+        panelInput.add(txtOutput,"span 3, align right, wrap");
 
-
-        //JPanel panelButtons = new JPanel(new MigLayout());
-        //OKButton = new JButton("OKButton");
-
-        //panelButtons.add(OKButton);
-        //panelInput.add(panelButtons);
-
-        
+        ResetButton = new JButton("  Reset  ");
+        panelInput.add(ResetButton);
         
     }
 
