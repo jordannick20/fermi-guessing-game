@@ -22,12 +22,16 @@ public class Window extends JFrame {
     private TextFieldValidator SecondValue;  
     private TextFieldValidator ThirdValue;
 
+    private HintManager hintManager;
+
     public Window() {
         // panel setup
         setSize(500, 450);
         setLocation(200, 150);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
+
+        hintManager = new HintManager();
 
         JPanel panelInput = new JPanel(new MigLayout("", "", "[]10[]10[]10[]10[]10[]20"));
         setContentPane(panelInput);
@@ -76,6 +80,17 @@ public class Window extends JFrame {
                 boolean pass1 = FirstValue.check();
                 boolean pass2 = SecondValue.check();    
                 boolean pass3 = ThirdValue.check();
+
+                if (pass1 && pass2 && pass3) {
+
+                int g1 = Integer.parseInt(FirstField.getText());
+                int g2 = Integer.parseInt(SecondField.getText());
+                int g3 = Integer.parseInt(ThirdField.getText());
+
+                String result = hintManager.getHint(g1, g2, g3);
+
+                txtOutput.append(result + "\n");
+            }    
 
 
                 
