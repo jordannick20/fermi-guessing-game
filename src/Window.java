@@ -67,8 +67,6 @@ public class Window extends JFrame {
         SecondValue.setRegExp("^[0-9]$");
         ThirdValue.setRegExp("^[0-9]$");
 
-
-
         OKButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 FirstValue.reset();                    
