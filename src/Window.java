@@ -9,9 +9,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 public class Window extends JFrame {
 
-    private JTextField txtType;
-    private JTextField txtCount;
-    private JTextField txtPrice;
+    private JTextField FirstField;
+    private JTextField SecondField;
+    private JTextField ThirdField;
 
     private JTextArea txtOutput;
 
@@ -28,19 +28,18 @@ public class Window extends JFrame {
         JPanel panelInput = new JPanel(new MigLayout("", "", "[]10[]10[]10[]10[]10[]20"));
         setContentPane(panelInput);
         
-        
         panelInput.add(new JLabel("Fermi Guessing Game"), "wrap");
         panelInput.add(new JLabel("Enter your three guesses (0-9):                Hints"),"wrap");
-        txtType = new JTextField();
-        panelInput.add(txtType,"wrap");
-        txtCount = new JTextField();
-        panelInput.add(txtCount,"wrap");
-        txtPrice = new JTextField();
-        panelInput.add(txtPrice, "wrap");
+        FirstField = new JTextField();
+        panelInput.add(FirstField,"wrap");
+        SecondField = new JTextField();
+        panelInput.add(SecondField,"wrap");
+        ThirdField = new JTextField();
+        panelInput.add(ThirdField, "wrap");
 
-        txtType.setPreferredSize(new Dimension(80, 20));
-        txtCount.setPreferredSize(new Dimension(80, 20));
-        txtPrice.setPreferredSize(new Dimension(80, 20));
+        FirstField.setPreferredSize(new Dimension(80, 20));
+        SecondField.setPreferredSize(new Dimension(80, 20));
+        ThirdField.setPreferredSize(new Dimension(80, 20));
         
         OKButton = new JButton("     Ok    ");
         panelInput.add(OKButton,"wrap");
