@@ -17,7 +17,10 @@ public class Window extends JFrame {
 
     private JButton OKButton;
     private JButton ResetButton;
-    
+
+    private TextFieldValidator FirstValue;
+    private TextFieldValidator SecondValue;  
+    private TextFieldValidator ThirdValue;
 
     public Window() {
         // panel setup
@@ -55,6 +58,31 @@ public class Window extends JFrame {
         // reset button
         ResetButton = new JButton("  Reset  ");
         panelInput.add(ResetButton);
+
+        FirstValue = new TextFieldValidator(FirstField, Color.RED);
+        SecondValue = new TextFieldValidator(SecondField, Color.RED);   
+        ThirdValue = new TextFieldValidator(ThirdField, Color.RED);
+
+        FirstValue.setRegExp("^[0-9]$");
+        SecondValue.setRegExp("^[0-9]$");
+        ThirdValue.setRegExp("^[0-9]$");
+
+
+
+        OKButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                FirstValue.reset();                    
+                SecondValue.reset();
+                ThirdValue.reset();
+
+                boolean pass1 = FirstValue.check();
+                boolean pass2 = SecondValue.check();    
+                boolean pass3 = ThirdValue.check();
+
+
+                
+            }
+        });
         
     }
 
