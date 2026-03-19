@@ -73,34 +73,58 @@ public class Window extends JFrame {
 
         OKButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FirstValue.reset();                    
-                SecondValue.reset();
-                ThirdValue.reset();
+            FirstValue.reset();                    
+            SecondValue.reset();
+            ThirdValue.reset();
 
-                boolean pass1 = FirstValue.check();
-                boolean pass2 = SecondValue.check();    
-                boolean pass3 = ThirdValue.check();
+            boolean pass1 = FirstValue.check();
+            boolean pass2 = SecondValue.check();    
+            boolean pass3 = ThirdValue.check();
 
-                if (pass1 && pass2 && pass3) {
+            if (pass1 && pass2 && pass3) {
+                int input1 = Integer.parseInt(FirstField.getText());
+                int input2 = Integer.parseInt(SecondField.getText());
+                int input3 = Integer.parseInt(ThirdField.getText());
 
-                int g1 = Integer.parseInt(FirstField.getText());
-                int g2 = Integer.parseInt(SecondField.getText());
-                int g3 = Integer.parseInt(ThirdField.getText());
+                String reset = hintManager.getHint(input1, input2, input3);
+                txtOutput.append(reset + "\n");
 
-                String result = hintManager.getHint(g1, g2, g3);
+                FirstField.setText("");
+                SecondField.setText("");
+                ThirdField.setText("");
 
-                txtOutput.append(result + "\n");
-            }    
+                if (hintManager.isGameOver()) {
+                    FirstField.setEnabled(false);
+                    SecondField.setEnabled(false); 
+                    ThirdField.setEnabled(false);
+                    OKButton.setEnabled(false);
+                }
+            }
+        }
+    });
 
+        ResetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {  
+            hintManager.reset();
 
-                
+            FirstValue.reset();
+            SecondValue.reset();
+            ThirdValue.reset();
+            
+
+            FirstField.setText("");
+            SecondField.setText("");
+            ThirdField.setText("");
+            txtOutput.setText("");
+
+            FirstField.setEnabled(true);
+            SecondField.setEnabled(true);
+            ThirdField.setEnabled(true);  
+            OKButton.setEnabled(true);
             }
         });
-        
     }
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         new Window().setVisible(true);
-        
     }
 }

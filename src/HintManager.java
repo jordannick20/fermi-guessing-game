@@ -16,7 +16,6 @@ public class HintManager {
             target[i] = (int)(Math.random() * 10);
             System.out.println(target[0] + " " + target[1] + " " + target[2]);
         }
-       
     }    
 
     public String getHint(int num1, int num2, int num3) {
@@ -55,7 +54,7 @@ public class HintManager {
         }
         if (num1 == target[0] && num2 == target[1] && num3 == target[2]) {
             gameOver = true;
-            output.append(String.format("%d %d %d : Fermi Fermi Fermi\nCongratulations! Guesses : %d",num1, num2, num3, guessCount));
+            output.append(String.format("%d %d %d : Fermi Fermi Fermi\nCongratulations! Guesses: %d",num1, num2, num3, guessCount));
             return output.toString();
         }
 
@@ -65,5 +64,11 @@ public class HintManager {
 
     public boolean isGameOver() {
         return gameOver;
+    }
+
+    public void reset() {
+        guessCount = 0;
+        gameOver = false;
+        generateTarget();
     }
 }
