@@ -112,6 +112,8 @@ public class Window extends JFrame {
                 FirstField.setText("");
                 SecondField.setText("");
                 ThirdField.setText("");
+                // focus for First JText area when ok button is clicked
+                FirstField.requestFocusInWindow();
 
                 if (hintManager.isGameOver()) {
                     FirstField.setEnabled(false);
@@ -136,6 +138,10 @@ public class Window extends JFrame {
             SecondField.setText("");
             ThirdField.setText("");
             txtOutput.setText("");
+            // focus for First JTextField on reset
+            FirstField.requestFocusInWindow();
+
+            
 
             FirstField.setEnabled(true);
             SecondField.setEnabled(true);
