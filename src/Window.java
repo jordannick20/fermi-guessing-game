@@ -52,7 +52,7 @@ public class Window extends JFrame {
         txtOutput.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
         txtOutput.setPreferredSize(new Dimension(400, 200));
         panelInput.add(txtOutput,"span 3, align right, wrap");
-        // reset button
+        // reset button at the bottom
         ResetButton = new JButton("  Reset  ");
         panelInput.add(ResetButton);
         
