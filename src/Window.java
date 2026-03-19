@@ -17,7 +17,12 @@ public class Window extends JFrame {
 
     private JButton OKButton;
     private JButton ResetButton;
-    
+
+    private TextFieldValidator FirstValue;
+    private TextFieldValidator SecondValue;  
+    private TextFieldValidator ThirdValue;
+
+    private HintManager hintManager;
 
     public Window() {
         // panel setup
@@ -25,6 +30,8 @@ public class Window extends JFrame {
         setLocation(200, 150);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
+
+        hintManager = new HintManager();
 
         JPanel panelInput = new JPanel(new MigLayout("", "", "[]10[]10[]10[]10[]10[]20"));
         setContentPane(panelInput);
@@ -55,11 +62,69 @@ public class Window extends JFrame {
         // reset button
         ResetButton = new JButton("  Reset  ");
         panelInput.add(ResetButton);
-        
-    }
 
-    public static void main(String[] args) throws Exception {
+        FirstValue = new TextFieldValidator(FirstField, Color.RED);
+        SecondValue = new TextFieldValidator(SecondField, Color.RED);   
+        ThirdValue = new TextFieldValidator(ThirdField, Color.RED);
+
+        FirstValue.setRegExp("^[0-9]$");
+        SecondValue.setRegExp("^[0-9]$");
+        ThirdValue.setRegExp("^[0-9]$");
+
+        OKButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            FirstValue.reset();                    
+            SecondValue.reset();
+            ThirdValue.reset();
+
+            boolean pass1 = FirstValue.check();
+            boolean pass2 = SecondValue.check();    
+            boolean pass3 = ThirdValue.check();
+
+            if (pass1 && pass2 && pass3) {
+                int input1 = Integer.parseInt(FirstField.getText());
+                int input2 = Integer.parseInt(SecondField.getText());
+                int input3 = Integer.parseInt(ThirdField.getText());
+
+                String reset = hintManager.getHint(input1, input2, input3);
+                txtOutput.append(reset + "\n");
+
+                FirstField.setText("");
+                SecondField.setText("");
+                ThirdField.setText("");
+
+                if (hintManager.isGameOver()) {
+                    FirstField.setEnabled(false);
+                    SecondField.setEnabled(false); 
+                    ThirdField.setEnabled(false);
+                    OKButton.setEnabled(false);
+                }
+            }
+        }
+    });
+
+        ResetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {  
+            hintManager.reset();
+
+            FirstValue.reset();
+            SecondValue.reset();
+            ThirdValue.reset();
+            
+
+            FirstField.setText("");
+            SecondField.setText("");
+            ThirdField.setText("");
+            txtOutput.setText("");
+
+            FirstField.setEnabled(true);
+            SecondField.setEnabled(true);
+            ThirdField.setEnabled(true);  
+            OKButton.setEnabled(true);
+            }
+        });
+    }
+    public static void main(String[] args) {
         new Window().setVisible(true);
-        
     }
 }
