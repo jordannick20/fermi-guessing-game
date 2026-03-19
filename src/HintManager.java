@@ -54,6 +54,7 @@ public class HintManager {
         }
         if (num1 == target[0] && num2 == target[1] && num3 == target[2]) {
             gameOver = true;
+            // format for text area 
             output.append(String.format("%d %d %d : Fermi Fermi Fermi\nCongratulations! Guesses: %d",num1, num2, num3, guessCount));
             return output.toString();
         }
