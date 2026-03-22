@@ -27,37 +27,41 @@ public class HintManager {
         int[] guess = { userinput1, userinput2, userinput3 };
         // hints fermi pico and nano are stored as strings in an array list
         ArrayList<String> hints = new ArrayList<>();
-        // two arrays storing true or false false by default
-        boolean[] targetUsed = new boolean[3];
+        // array storing true or false false by default
         boolean[] guessUsed = new boolean[3];
 
         for (int i = 0; i < 3; i++) {
             // if the guess is equal to the generated number add fermi to the array list
             if (guess[i] == target[i]) {
                 hints.add("Fermi");
-                targetUsed[i] = true;
                 guessUsed[i] = true;
             }
-        }
+        } 
         for (int i = 0; i < 3; i++) {
             // if guessUsed is false run the code if true skip it only check guesses not matched as fermi
             if (!guessUsed[i]) {
                 // checks each target with nested for loop target[0] target[1] target[2]
                 for (int p = 0; p < 3; p++) {
-                    // if targetUsed is false and guess = target add pico to the arraylist
-                    if (!targetUsed[p] && guess[i] == target[p]) {
+                    // if guessUsed is false and guess = target add pico to the arraylist
+                    if (!guessUsed[p] && guess[i] == target[p]) {
                         hints.add("Pico");
-                        targetUsed[p] = true;
                         guessUsed[i] = true;
                         break;
                     }
                 }
             }
         }
-        // while the hints arraylist is less than 3 continue to add nano into the arraylist
-        while (hints.size() < 3) {
+        // if the hints arraylist is less than 1 add 3 nanos to the list
+        if (hints.size() < 1) {
             hints.add("Nano");
-        }
+            hints.add("Nano");
+            hints.add("Nano");
+        } else if (hints.size() < 2) {
+            hints.add("Nano");
+            hints.add("Nano"); 
+        } else if (hints.size() < 3) 
+           hints.add("Nano");
+        System.out.println(hints);
         // if all of users guesses are the same as target game is over and text feilds and ok button stop working
         if (userinput1 == target[0] && userinput2 == target[1] && userinput3 == target[2]) {
             gameOver = true;

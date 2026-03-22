@@ -96,26 +96,28 @@ public class Window extends JFrame {
             SecondValue.reset();
             ThirdValue.reset();
 
-            // runs check method to see if digit entered is 0-9 check is from TextFieldValidator
+            // runs check method to see if digit entered is 0-9 if not border becomes red check is from TextFieldValidator
             boolean pass1 = FirstValue.check();
             boolean pass2 = SecondValue.check();    
             boolean pass3 = ThirdValue.check();
-
+            // only continue if all inputs are valid 
             if (pass1 && pass2 && pass3) {
+                // convert strings to integers
                 int userinput1 = Integer.parseInt(FirstField.getText());
                 int userinput2 = Integer.parseInt(SecondField.getText());
                 int userinput3 = Integer.parseInt(ThirdField.getText());
                 
                 String output = hintManager.getHint(userinput1, userinput2, userinput3);
+                // outputs string to text area
                 txtOutput.append(output + "\n");
                 
-                // when game is over remove text disable input and OKButton
+                // remove numbers from textfield
                 FirstField.setText("");
                 SecondField.setText("");
                 ThirdField.setText("");
                 // focus for First JText area when ok button is clicked
                 FirstField.requestFocusInWindow();
-
+                // when game is over disable input and OKButton
                 if (hintManager.isGameOver()) {
                     FirstField.setEnabled(false);
                     SecondField.setEnabled(false); 
