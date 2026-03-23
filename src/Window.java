@@ -30,69 +30,94 @@ public class Window extends JFrame {
         setLocation(200, 150);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-
+        // handles fermi game rules
         hintManager = new HintManager();
+        
+        JPanel mainPanel = new JPanel(new MigLayout(""));
+        setContentPane(mainPanel);
+        JPanel leftPanel = new JPanel(new MigLayout("", "", "[]10[]10[]10[]10[]10[]180"));
+        mainPanel.add(leftPanel);
 
-        JPanel panelInput = new JPanel(new MigLayout("", "", "[]10[]10[]10[]10[]10[]20"));
-        setContentPane(panelInput);
         // JLabels
-        panelInput.add(new JLabel("Fermi Guessing Game"), "wrap");
-        panelInput.add(new JLabel("Enter your three guesses (0-9):                Hints"),"wrap");
+        leftPanel.add(new JLabel("Fermi Guessing Game"), "wrap");
+        leftPanel.add(new JLabel("Enter your three guesses (0-9):"),"wrap");
+
         // text fields
         FirstField = new JTextField();
-        panelInput.add(FirstField,"wrap");
+        leftPanel.add(FirstField,"wrap");
         SecondField = new JTextField();
-        panelInput.add(SecondField,"wrap");
+        leftPanel.add(SecondField,"wrap");
         ThirdField = new JTextField();
-        panelInput.add(ThirdField, "wrap");
+        leftPanel.add(ThirdField, "wrap");
 
+        // setting size for text
         FirstField.setPreferredSize(new Dimension(80, 20));
         SecondField.setPreferredSize(new Dimension(80, 20));
         ThirdField.setPreferredSize(new Dimension(80, 20));
 
         // ok Button
         OKButton = new JButton("     Ok    ");
-        panelInput.add(OKButton,"wrap");
+        leftPanel.add(OKButton,"wrap");
+
+        // reset button
+        ResetButton = new JButton("  Reset  ");
+        leftPanel.add(ResetButton);
+
+        JPanel rightPanel = new JPanel(new MigLayout(""));
+        mainPanel.add(rightPanel);
+        rightPanel.add(new JLabel("Hints"),"wrap");
+
         // text area that shows the hints
         txtOutput = new JTextArea();
         txtOutput.setEditable(false);
         txtOutput.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
         txtOutput.setPreferredSize(new Dimension(400, 200));
-        panelInput.add(txtOutput,"span 3, align right, wrap");
-        // reset button at the bottom
-        ResetButton = new JButton("  Reset  ");
-        panelInput.add(ResetButton);
 
-        FirstValue = new TextFieldValidator(FirstField, Color.RED);
-        SecondValue = new TextFieldValidator(SecondField, Color.RED);   
-        ThirdValue = new TextFieldValidator(ThirdField, Color.RED);
+        // ScrollPane with dimension
+        JScrollPane scrollPane = new JScrollPane(txtOutput);
+        scrollPane.setPreferredSize(new Dimension(250, 300));
+        rightPanel.add(scrollPane);
 
+        // sets the boarder color around textfield when an error occurs -----------------------------------------------------------
+        FirstValue = new TextFieldValidator(FirstField);
+        SecondValue = new TextFieldValidator(SecondField);   
+        ThirdValue = new TextFieldValidator(ThirdField);
+
+        // only single digit numbers 0-9 are alowed setRegExp is from TextFieldValidator
         FirstValue.setRegExp("^[0-9]$");
         SecondValue.setRegExp("^[0-9]$");
         ThirdValue.setRegExp("^[0-9]$");
 
+        // ok button action listener 
         OKButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            // restore border
             FirstValue.reset();                    
             SecondValue.reset();
             ThirdValue.reset();
 
+            // runs check method to see if digit entered is 0-9 if not border becomes red check is from TextFieldValidator
             boolean pass1 = FirstValue.check();
             boolean pass2 = SecondValue.check();    
             boolean pass3 = ThirdValue.check();
-
+            // only continue if all inputs are valid 
             if (pass1 && pass2 && pass3) {
-                int input1 = Integer.parseInt(FirstField.getText());
-                int input2 = Integer.parseInt(SecondField.getText());
-                int input3 = Integer.parseInt(ThirdField.getText());
-
-                String reset = hintManager.getHint(input1, input2, input3);
-                txtOutput.append(reset + "\n");
-
+                // convert strings to integers
+                int userinput1 = Integer.parseInt(FirstField.getText());
+                int userinput2 = Integer.parseInt(SecondField.getText());
+                int userinput3 = Integer.parseInt(ThirdField.getText());
+                
+                String output = hintManager.getHint(userinput1, userinput2, userinput3);
+                // outputs string to text area
+                txtOutput.append(output + "\n");
+                
+                // remove numbers from textfield
                 FirstField.setText("");
                 SecondField.setText("");
                 ThirdField.setText("");
-
+                // focus for First JText area when ok button is clicked
+                FirstField.requestFocusInWindow();
+                // when game is over disable input and OKButton
                 if (hintManager.isGameOver()) {
                     FirstField.setEnabled(false);
                     SecondField.setEnabled(false); 
@@ -102,21 +127,24 @@ public class Window extends JFrame {
             }
         }
     });
-
+        // reset button event listener
         ResetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {  
+            // reset game
             hintManager.reset();
-
+            // restore boarder
             FirstValue.reset();
             SecondValue.reset();
             ThirdValue.reset();
             
-
+           // remove text from text fields and textarea
             FirstField.setText("");
             SecondField.setText("");
             ThirdField.setText("");
             txtOutput.setText("");
-
+            // focus for First JTextField on reset
+            FirstField.requestFocusInWindow();
+            //  re enable everthing on reset
             FirstField.setEnabled(true);
             SecondField.setEnabled(true);
             ThirdField.setEnabled(true);  
