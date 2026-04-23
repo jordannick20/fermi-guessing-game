@@ -9,6 +9,13 @@
             "name": "Window",
             "request": "launch",
             "mainClass": "Window",
+            "projectName": "blah 2_6ade3135"
+        },
+        {
+            "type": "java",
+            "name": "Window",
+            "request": "launch",
+            "mainClass": "Window",
             "projectName": "oop-project-2-jordannick20_5fdf1bc3"
         },
         {
